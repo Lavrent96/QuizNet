@@ -11,9 +11,9 @@ namespace Domain.Interfaces
     {
         Task<Shipment> FindByIdAsync(long id);
         Task<Shipment> FindByIdAsync_Correct(long shipmentId, params ShipmentModules[] includes);
-        Task<Shipment> FindByIdAsync_Incorrect1(long id);
-        Task<Shipment> FindByIdAsync_Incorrect2(long id);
-        Task<Shipment> FindByIdAsync_Incorrect3(long id);
+        Task<Shipment> FindByIdAsync_Containers(long id);
+        Task<Shipment> FindByIdAsync_Transports(long id);
+        Task<Shipment> FindByIdAsync_Items(long id);
 
     }
 }

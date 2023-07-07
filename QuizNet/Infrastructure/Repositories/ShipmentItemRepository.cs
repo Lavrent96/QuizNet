@@ -62,6 +62,7 @@ namespace Infrastructure.Repositories
             }
 
             var shipment = await _context.Shipments.FindAsync(newItem.ShipmentId);
+          
             if (shipment is null)
             {
                 throw new ArgumentException("Invalid ShipmentId. No matching shipment found.", nameof(newItem));
@@ -163,22 +164,12 @@ namespace Infrastructure.Repositories
                 throw new ArgumentException("The newCommodityCode parameter cannot be null or empty.");
             }
 
-            var shipment = await _context.Shipments.FindAsync(shipmentId);
-            if (shipment is null)
-            {
-                throw new ArgumentException("Invalid shipmentId. No matching shipment found.", nameof(shipmentId));
-            }
+            var shipment = await _context.Shipments.FindAsync(shipmentId) ?? throw new ArgumentException("Invalid shipmentId. No matching shipment found.", nameof(shipmentId));
+           
+            var updateResult = await _context.ShipmentItems
+                .Where(si => si.ShipmentId == shipmentId).ExecuteUpdateAsync(si => si.SetProperty(i => i.CommodityCode, newCommodityCode));
 
-            var shipmentItems = await _context.ShipmentItems
-                .Where(si => si.ShipmentId == shipmentId)
-                .ToListAsync();
-
-            foreach (var shipmentItem in shipmentItems)
-            {
-                shipmentItem.CommodityCode = newCommodityCode;
-            }
-
-            return await _context.SaveChangesAsync();
+            return updateResult;
         }
 
         /*UpdateShipmentItemsByShipmentId_InCorrect Function:

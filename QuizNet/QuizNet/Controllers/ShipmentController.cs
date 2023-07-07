@@ -25,24 +25,24 @@ namespace QuizNet.Controllers
         /// <returns></returns>
         /// 
 
-        [HttpPost("FindByIdIncorrect1")]
-        public async Task<IActionResult> FindById_Incorrect1(int id)
+        [HttpGet("FindByIdWithContainers")]
+        public async Task<IActionResult> FindById_Containers(int id)
         {
-            var result = await _shipmentRepository.FindByIdAsync_Incorrect1(id);
+            var result = await _shipmentRepository.FindByIdAsync_Containers(id);
             return Ok(result);
         }
 
-        [HttpPost("FindByIdIncorrect2")]
-        public async Task<IActionResult> FindById_Incorrect2(int id)
+        [HttpGet("FindByIdWithTransports")]
+        public async Task<IActionResult> FindById_Transports(int id)
         {
-            var result = await _shipmentRepository.FindByIdAsync_Incorrect2(id);
+            var result = await _shipmentRepository.FindByIdAsync_Transports(id);
             return Ok(result);
         }
 
-        [HttpPost("FindByIdIncorrect3")]
-        public async Task<IActionResult> FindById_Incorrect3(int id)
+        [HttpGet("FindByIdWithItems")]
+        public async Task<IActionResult> FindById_Items(int id)
         {
-            var result = await _shipmentRepository.FindByIdAsync_Incorrect3(id);
+            var result = await _shipmentRepository.FindByIdAsync_Items(id);
             return Ok(result);
         }
 
