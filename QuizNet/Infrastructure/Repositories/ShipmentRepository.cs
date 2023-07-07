@@ -35,12 +35,6 @@ namespace Infrastructure.Repositories
                         break;
                     case ShipmentModules.Items:
                         query = query.Include(s => s.Items);
-                        break;
-                    case ShipmentModules.ShipmentRemarks:
-                        query = query.Include(s => s.ShipmentRemarks);
-                        break;
-                    case ShipmentModules.Stuffing:
-                        query = query.Include(s => s.Stuffings);
                         break;         
                     case ShipmentModules.Transports:
                         query = query.Include(s => s.Transports);
@@ -53,40 +47,36 @@ namespace Infrastructure.Repositories
             return await query.FirstOrDefaultAsync(s => s.Id == shipmentId);
         }
 
-        public async Task<Shipment> FindByIdAsync_Incorrect1(long id)
+        public async Task<Shipment> FindByIdAsync_Containers(long id )
         {
             if (id == 0)
                 return null;
 
             var query = _context.Shipments
                 .Include(x => x.Containers)
-                .Include(x => x.Items)
                 .AsQueryable();
 
             return await query.FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        public async Task<Shipment> FindByIdAsync_Incorrect2(long id)
+        public async Task<Shipment> FindByIdAsync_Transports(long id)
         {
             if (id == 0)
                 return null;
 
             var query = _context.Shipments
                 .Include(x => x.Transports)
-                .Include(x => x.ShipmentRemarks)
                 .AsQueryable();
 
             return await query.FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        public async Task<Shipment> FindByIdAsync_Incorrect3(long id)
+        public async Task<Shipment> FindByIdAsync_Items(long id)
         {
             if (id == 0)
                 return null;
 
             var query = _context.Shipments
-                .Include(x => x.Stuffings)
-                .Include(x => x.Containers)
                 .Include(x => x.Items)
                 .AsQueryable();
 
